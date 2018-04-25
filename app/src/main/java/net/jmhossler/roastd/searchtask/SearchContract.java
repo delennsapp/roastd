@@ -1,6 +1,7 @@
 package net.jmhossler.roastd.searchtask;
 
 
+import android.content.Intent;
 import android.text.Editable;
 
 import net.jmhossler.roastd.BasePresenter;
@@ -12,6 +13,7 @@ public interface SearchContract {
   }
 
   interface Presenter extends BasePresenter {
-    void searchForText(Editable searchText);
+
+    void search(String query);
   }
 }

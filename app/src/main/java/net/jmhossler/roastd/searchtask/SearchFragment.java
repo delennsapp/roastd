@@ -1,22 +1,24 @@
 package net.jmhossler.roastd.searchtask;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import net.jmhossler.roastd.R;
 
 public class SearchFragment extends Fragment implements SearchContract.View {
 
   private SearchContract.Presenter mPresenter;
-  private EditText searchText;
+  private SearchView searchBar;
 
   public static SearchFragment newInstance() { return new SearchFragment(); }
 
@@ -31,6 +33,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
+
     super.onCreate(savedInstanceState);
   }
 
@@ -39,14 +42,20 @@ public class SearchFragment extends Fragment implements SearchContract.View {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.search_fragment, container, false);
-    searchText = root.findViewById(R.id.searchText);
-    searchText.addTextChangedListener(new TextWatcher() {
-      public void afterTextChanged(Editable s) {
-        mPresenter.searchForText(s);
+    searchBar = root.findViewById(R.id.search_bar);
+    searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+        mPresenter.search(query);
+        return false;
       }
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-      public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+        return false;
+      }
     });
+
 
     return root;
   }

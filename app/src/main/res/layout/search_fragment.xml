@@ -1,17 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-  <EditText
-    android:id="@+id/searchText"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:hint="Search Text"
-    tools:layout_editor_absoluteX="30dp"
-    tools:layout_editor_absoluteY="44dp" />
-
-</android.support.constraint.ConstraintLayout>
+<android.support.v7.widget.SearchView
+android:id="@+id/search_bar"
+android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+android:background="?attr/colorPrimary"
+android:elevation="4dp"
+android:title="@string/search_title"
+android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto" />

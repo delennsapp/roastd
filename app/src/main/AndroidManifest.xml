@@ -20,7 +20,11 @@
       </intent-filter>
     </activity>
     <activity android:name=".profiletask.ProfileActivity" />
-    <activity android:name=".searchtask.SearchActivity" />
+    <activity android:name=".searchtask.SearchActivity"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+      <meta-data android:name="android.app.searchable"
+        android:resource="@layout/searchable" />
+    </activity>
     <activity android:name=".favoritestask.FavoritesActivity" />
     <activity
       android:name=".logintask.LoginActivity"
