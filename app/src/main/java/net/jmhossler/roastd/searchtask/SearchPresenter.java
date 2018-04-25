@@ -20,15 +20,11 @@ public class SearchPresenter extends BaseSearchableItemPresenter implements Sear
   private static final String TAG = "SearchActivity";
   @NonNull
   private final SearchContract.View mSearchView;
-  private final FirebaseAuth mAuth;
-  private final SearchableItemDataSource dataSource;
 
   public SearchPresenter(@NonNull SearchContract.View searchView,
                          FirebaseAuth instance, SearchableItemDataSource dataSources,
                          SearchableItemListFragment silfView, UserDataSource userDataSource) {
     super(silfView, instance, dataSources, userDataSource);
-    mAuth = instance;
-    dataSource = dataSources;
     mSearchView = searchView;
     mSearchView.setPresenter(this);
     mListView.setPresenter(this);
@@ -36,11 +32,11 @@ public class SearchPresenter extends BaseSearchableItemPresenter implements Sear
 
   @Override
   public void start() {
-
+    super.start();
   }
 
   public void search(String query) {
-    dataSource.getSearchableItemsByText(query,
+    mSearchableItemDataStore.getSearchableItemsByText(query,
       new SearchableItemDataSource.LoadSearchableItemsCallback() {
       @Override
       public void onSearchableItemsLoaded(List<SearchableItem> items) {

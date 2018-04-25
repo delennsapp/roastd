@@ -72,7 +72,22 @@ public class BaseSearchableItemPresenter implements SearchableItemListContract.P
   @Override
   public void bindViewAtPosition(int position, SearchableItemListContract.SearchableListItemView view) {
     view.setContent(mItems.get(position).getName());
-    view.setFavoriteState(isFavorited(mItems.get(position).getUuid()));
+    mUserDataStore.getUser(mAuth.getUid(), new UserDataSource.GetUserCallback() {
+      @Override
+      public void onUserLoaded(User user) {
+        if (user == null) {
+          Log.d(TAG, "User " + mAuth.getUid() + " does not exist! This is bad!");
+          mListView.finish();
+        }
+        mUser = user;
+        view.setFavoriteState(isFavorited(mItems.get(position).getUuid()));
+      }
+
+      @Override
+      public void onDataNotAvailable() {
+        Log.d(TAG, "Error with Firebase Instance????");
+      }
+    });
   }
 
   @Override
