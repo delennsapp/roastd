@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
   android:gravity="center"
+  android:id="@+id/constraintLayout"
   tools:context=".searchtask.SearchActivity">
 
-    <FrameLayout
+  <FrameLayout
     android:id="@+id/searchFrame"
+    app:layout_constraintTop_toTopOf="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    </FrameLayout>
+  </FrameLayout>
 
-    <FrameLayout
-      android:id="@+id/itemFrame"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <include layout="@layout/item_list" />
-    </FrameLayout>
+  <FrameLayout
+    android:id="@+id/itemFrame"
+    app:layout_constraintTop_toBottomOf="@id/searchFrame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <include layout="@layout/item_list" />
+  </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
