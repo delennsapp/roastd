@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.jmhossler.roastd.R;
@@ -23,12 +24,14 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
   private RecyclerView mListRecyclerView;
   private SearchableItemAdapter mSearchableItemAdapter;
   private SearchableItemListContract.Presenter mPresenter;
+  private ProgressBar mProgressBar;
 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.item_list, container, false);
 
+    mProgressBar = v.findViewById(R.id.progressBar);
     mListRecyclerView = v.findViewById(R.id.item_list);
 
     // The RecyclerView does very little. The LayoutManager is the one who positions items
@@ -36,6 +39,7 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
     mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     mSearchableItemAdapter = new SearchableItemAdapter(mPresenter);
     mListRecyclerView.setAdapter(mSearchableItemAdapter);
+
     return v;
   }
 
@@ -70,8 +74,20 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
     startActivity(new Intent(getContext(), ShopActivity.class));
   }
 
+  @Override
+  public void showProgressBarHideList() {
+    mProgressBar.setVisibility(View.VISIBLE);
+    mListRecyclerView.setVisibility(View.GONE);
+  }
+
+  @Override
+  public void hideProgressBarShowList() {
+    mProgressBar.setVisibility(View.GONE);
+    mListRecyclerView.setVisibility(View.VISIBLE);
+  }
+
   /// Holds the View of each item in the RecyclerView
-  class SearchableItemHolder extends RecyclerView.ViewHolder implements
+  static class SearchableItemHolder extends RecyclerView.ViewHolder implements
     SearchableItemListContract.SearchableListItemView, View.OnClickListener{
 
     final ImageView mIconImageView;
@@ -107,7 +123,7 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
   // to view holders. Binding data happens a lot more often, since the RecyclerView
   // just reuses only as many ViewHolders (and thus views) as can be seen on the screen.
   // When a view "goes off screen" another (already created) view is just bound to new data
-  private class SearchableItemAdapter extends RecyclerView.Adapter<SearchableItemHolder> {
+  static private class SearchableItemAdapter extends RecyclerView.Adapter<SearchableItemHolder> {
 
     private SearchableItemListContract.Presenter mPresenter;
 
@@ -118,7 +134,7 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
     @NonNull
     @Override
     public SearchableItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inf = LayoutInflater.from(getActivity());
+        LayoutInflater inf = LayoutInflater.from(parent.getContext());
         return new SearchableItemHolder(inf, parent, mPresenter);
     }
 

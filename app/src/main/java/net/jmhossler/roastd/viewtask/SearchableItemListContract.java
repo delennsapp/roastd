@@ -10,6 +10,8 @@ public interface SearchableItemListContract {
     void navigateToBean(String beanId);
     void navigateToDrink(String drinkId);
     void navigateToShop(String shopId);
+    void showProgressBarHideList();
+    void hideProgressBarShowList();
   }
 
   interface Presenter extends BasePresenter {
