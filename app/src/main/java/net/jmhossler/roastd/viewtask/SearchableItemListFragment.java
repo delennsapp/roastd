@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import net.jmhossler.roastd.R;
 import net.jmhossler.roastd.beantask.BeanActivity;
 import net.jmhossler.roastd.drinktask.DrinkActivity;
@@ -86,12 +87,18 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
     mListRecyclerView.setVisibility(View.VISIBLE);
   }
 
+  @Override
+  public void finish() {
+    getActivity().finish();
+  }
+
   /// Holds the View of each item in the RecyclerView
   static class SearchableItemHolder extends RecyclerView.ViewHolder implements
     SearchableItemListContract.SearchableListItemView, View.OnClickListener{
 
     final ImageView mIconImageView;
     final TextView mContentView;
+    final LikeButton mLikeButton;
     final SearchableItemListContract.Presenter mPresenter;
 
     public SearchableItemHolder(LayoutInflater inflater, ViewGroup parent,
@@ -99,13 +106,30 @@ public class SearchableItemListFragment extends Fragment implements SearchableIt
       super(inflater.inflate(R.layout.item_list_content, parent, false));
       mIconImageView = itemView.findViewById(R.id.list_item_icon);
       mContentView = itemView.findViewById(R.id.content);
+      mLikeButton = itemView.findViewById(R.id.heart_button);
       mPresenter = presenter;
       itemView.setOnClickListener(this);
+      mLikeButton.setOnLikeListener(new OnLikeListener() {
+        @Override
+        public void liked(LikeButton likeButton) {
+          mPresenter.toggleFavorite(getAdapterPosition(), true);  // I did not think this would work lmao
+        }
+
+        @Override
+        public void unLiked(LikeButton likeButton) {
+          mPresenter.toggleFavorite(getAdapterPosition(), false);
+        }
+      });
     }
 
     @Override
     public void setContent(String content) {
       mContentView.setText(content);
+    }
+
+    @Override
+    public void setFavoriteState(Boolean state) {
+      mLikeButton.setLiked(state);
     }
 
     @Override

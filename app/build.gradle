@@ -61,6 +61,7 @@ dependencies {
   implementation 'com.github.santalu:mask-edittext:1.0.3'
   implementation 'com.google.guava:guava:22.0'
   implementation 'com.android.support:recyclerview-v7:27.1.1'
+  implementation 'com.github.jd-alexander:LikeButton:0.2.3'
   annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
   annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
   annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'

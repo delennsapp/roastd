@@ -11,27 +11,21 @@ import java.util.Map;
 //   and favoriteUuids
 public class User {
 
-  @NonNull
   private String uuid;
 
-  @NonNull
   private String email;
 
-  @NonNull
   private String name;
 
-  @Nullable
   private String photoURL;
 
-  @NonNull
   private Map<String, Boolean> favoriteUUIDs;
 
   public User() {
     // Default constructor required for calls to DataSnapshot.getValue(User.class)
   }
 
-  public User(@NonNull String uuid, @NonNull String email,
-              @NonNull String name, @Nullable String photoURL) {
+  public User(String uuid, String email, String name, String photoURL) {
     this.setUuid(uuid);
     this.setEmail(email);
     this.setName(name);
@@ -52,7 +46,6 @@ public class User {
     return false;
   }
 
-  @NonNull
   public String getUuid() {
     return uuid;
   }
@@ -61,7 +54,6 @@ public class User {
     this.uuid = uuid;
   }
 
-  @NonNull
   public String getEmail() {
     return email;
   }
@@ -70,7 +62,6 @@ public class User {
     this.email = email;
   }
 
-  @NonNull
   public String getName() {
     return name;
   }
@@ -79,7 +70,6 @@ public class User {
     this.name = name;
   }
 
-  @Nullable
   public String getPhotoURL() {
     return photoURL;
   }
@@ -88,7 +78,6 @@ public class User {
     this.photoURL = photoURL;
   }
 
-  @NonNull
   public Map getFavoriteUUIDs() {
     return favoriteUUIDs;
   }
