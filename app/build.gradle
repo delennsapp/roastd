@@ -69,6 +69,7 @@ dependencies {
   testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
   testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
   testImplementation 'org.powermock:powermock-classloading-xstream:1.7.0'
+  implementation 'com.algolia:algoliasearch-android:3.+'
 }
 
 apply plugin: 'com.google.gms.google-services'

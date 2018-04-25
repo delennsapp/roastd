@@ -10,4 +10,5 @@ public interface SearchableItemDataSource extends BaseDataSource {
   }
 
   void getSearchableItems(List<String> ids, LoadSearchableItemsCallback callback);
+  void getSearchableItemsByText(String query, LoadSearchableItemsCallback callback);
 }

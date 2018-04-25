@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import net.jmhossler.roastd.R;
 import net.jmhossler.roastd.util.ActivityUtils;
+import net.jmhossler.roastd.util.PopulateDB;
 
 public class MainActivity extends AppCompatActivity {
 

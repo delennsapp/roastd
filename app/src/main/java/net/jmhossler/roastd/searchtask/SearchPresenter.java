@@ -4,8 +4,13 @@ package net.jmhossler.roastd.searchtask;
 
 import android.support.annotation.NonNull;
 
+import net.jmhossler.roastd.data.searchableItem.FirebaseRTSearchableItemRepository;
+import net.jmhossler.roastd.data.searchableItem.SearchableItem;
+import net.jmhossler.roastd.data.searchableItem.SearchableItemDataSource;
 import net.jmhossler.roastd.viewtask.BaseSearchableItemPresenter;
 import net.jmhossler.roastd.viewtask.SearchableItemListFragment;
+
+import java.util.List;
 
 public class SearchPresenter extends BaseSearchableItemPresenter implements SearchContract.Presenter {
 
@@ -26,6 +31,19 @@ public class SearchPresenter extends BaseSearchableItemPresenter implements Sear
   }
 
   public void search(String query) {
+    SearchableItemDataSource ds = FirebaseRTSearchableItemRepository.getInstance();
+    ds.getSearchableItemsByText(query, new SearchableItemDataSource.LoadSearchableItemsCallback() {
+      @Override
+      public void onSearchableItemsLoaded(List<SearchableItem> items) {
+        mItems = items;
+        mListView.notifyDataSetChanged();
+        mListView.hideProgressBarShowList();
+      }
 
+      @Override
+      public void onDataNotAvailable() {
+
+      }
+    });
   }
 }
