@@ -33,7 +33,6 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
-
     super.onCreate(savedInstanceState);
   }
 
@@ -55,7 +54,6 @@ public class SearchFragment extends Fragment implements SearchContract.View {
         return false;
       }
     });
-
 
     return root;
   }
