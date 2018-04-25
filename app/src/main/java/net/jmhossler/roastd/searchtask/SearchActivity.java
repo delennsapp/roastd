@@ -4,7 +4,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import net.jmhossler.roastd.R;
+import net.jmhossler.roastd.data.searchableItem.FirebaseRTSearchableItemRepository;
+import net.jmhossler.roastd.data.user.FirebaseRTUserRepository;
 import net.jmhossler.roastd.util.ActivityUtils;
 import net.jmhossler.roastd.viewtask.SearchableItemListFragment;
 
@@ -36,7 +40,8 @@ public class SearchActivity extends AppCompatActivity {
       ActivityUtils.addFragmentToActivity(fm, silf, R.id.itemFrame);
     }
 
-    mSearchPresenter = new SearchPresenter(searchFragment, silf);
+    mSearchPresenter = new SearchPresenter(searchFragment, FirebaseAuth.getInstance(),
+      FirebaseRTSearchableItemRepository.getInstance(), silf, FirebaseRTUserRepository.getsInstance());
   }
 
 
