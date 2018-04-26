@@ -114,8 +114,12 @@ public class DrinkPresenter implements DrinkContract.Presenter {
   }
 
   @Override
-  public void setImage() {
-
+  public void setImage(SearchableItem item) {
+    Drink drink = (Drink) item;
+    String imageUrl = item.getImage();
+    if (imageUrl != null) {
+      mView.displayImage(imageUrl);
+    }
   }
 
   @Override

@@ -59,6 +59,7 @@ public class BeanPresenter implements BeanContract.Presenter {
             setRoast(item);
             setOrigin(item);
             setCurrentRating(item);
+            setImage(item);
           }
           @Override
           public void onDataNotAvailable() { }
@@ -105,8 +106,12 @@ public class BeanPresenter implements BeanContract.Presenter {
   }
 
   @Override
-  public void setImage() {
-
+  public void setImage(SearchableItem item) {
+    Bean bean = (Bean) item;
+    String imageUrl = item.getImage();
+    if (imageUrl != null) {
+      mView.displayImage(imageUrl);
+    }
   }
 
   @Override

@@ -28,6 +28,6 @@ public interface BeanContract {
     void setOrigin(SearchableItem item);
     void setCurrentRating(SearchableItem item);
     void setNewRating(float rating);
-    void setImage();
+    void setImage(SearchableItem item);
   }
 }

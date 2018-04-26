@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import net.jmhossler.roastd.R;
 import net.jmhossler.roastd.data.bean.FirebaseRTBeanRepository;
@@ -22,6 +25,7 @@ public class BeanActivity extends AppCompatActivity implements BeanContract.View
   private TextView mRoast;
   private TextView mOrigin;
   private RatingBar mRatingBar;
+  private ImageView mImageView;
 
   private static final String itemKey = "BEAN_ID";
 
@@ -43,6 +47,7 @@ public class BeanActivity extends AppCompatActivity implements BeanContract.View
     mRoast = (TextView) findViewById(R.id.roast);
     mOrigin = (TextView) findViewById(R.id.origin);
     mRatingBar = findViewById(R.id.rating_bar);
+    mImageView = findViewById(R.id.bean_background);
 
     BeanPresenter presenter = new BeanPresenter(this, beanId, FirebaseRTUserRepository.getsInstance(),
       FirebaseRTBeanRepository.getInstance(), FirebaseRTShopRepository.getInstance(),
@@ -93,7 +98,7 @@ public class BeanActivity extends AppCompatActivity implements BeanContract.View
 
   @Override
   public void displayImage(String imageUrl) {
-
+    Glide.with(this).load(imageUrl).thumbnail(0.5f).into(mImageView);
   }
 
   @Override

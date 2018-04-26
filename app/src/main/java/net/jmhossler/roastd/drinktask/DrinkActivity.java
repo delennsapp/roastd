@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import net.jmhossler.roastd.R;
 import net.jmhossler.roastd.data.drink.FirebaseRTDrinkRepository;
@@ -24,6 +27,7 @@ public class DrinkActivity extends AppCompatActivity implements DrinkContract.Vi
   private TextView mType;
   private TextView mPrice;
   private RatingBar mRatingBar;
+  private ImageView mImageView;
 
   private static final String itemKey = "DRINK_ID";
 
@@ -45,6 +49,7 @@ public class DrinkActivity extends AppCompatActivity implements DrinkContract.Vi
     mType = (TextView) findViewById(R.id.type);
     mPrice = (TextView) findViewById(R.id.price);
     mRatingBar = findViewById(R.id.rating_bar);
+    mImageView = findViewById(R.id.drink_background);
 
     DrinkPresenter presenter = new DrinkPresenter(this, drinkId, FirebaseRTUserRepository.getsInstance(),
       FirebaseRTDrinkRepository.getInstance(), FirebaseRTShopRepository.getInstance(),
@@ -96,7 +101,7 @@ public class DrinkActivity extends AppCompatActivity implements DrinkContract.Vi
 
   @Override
   public void displayImage(String imageUrl) {
-
+    Glide.with(this).load(imageUrl).thumbnail(0.5f).into(mImageView);
   }
 
   @Override
