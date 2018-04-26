@@ -95,7 +95,9 @@ public class ShopPresenter extends BaseSearchableItemPresenter implements ShopCo
 
   @Override
   public void setImage(String imageUrl) {
-    mView.displayImage(imageUrl);
+    if(imageUrl != null && !imageUrl.equals("")) {
+      mView.displayImage(imageUrl);
+    }
   }
 
   @Override

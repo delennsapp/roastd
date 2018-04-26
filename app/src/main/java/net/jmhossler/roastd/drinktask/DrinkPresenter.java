@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import net.jmhossler.roastd.R;
 import net.jmhossler.roastd.data.drink.Drink;
 import net.jmhossler.roastd.data.drink.DrinkDataSource;
 import net.jmhossler.roastd.data.review.Review;
@@ -118,7 +119,7 @@ public class DrinkPresenter implements DrinkContract.Presenter {
   public void setImage(SearchableItem item) {
     Drink drink = (Drink) item;
     String imageUrl = item.getImage();
-    if (imageUrl != null) {
+    if (imageUrl != null && !imageUrl.equals("")) {
       mView.displayImage(imageUrl);
     }
   }
