@@ -37,7 +37,11 @@ public class SearchPresenter extends BaseSearchableItemPresenter implements Sear
       new SearchableItemDataSource.LoadSearchableItemsCallback() {
       @Override
       public void onSearchableItemsLoaded(List<SearchableItem> items) {
-        mItems = items;
+        if (items == null) {
+          mItems.clear();
+        } else {
+          mItems = items;
+        }
         mListView.notifyDataSetChanged();
         mListView.hideProgressBarShowList();
       }

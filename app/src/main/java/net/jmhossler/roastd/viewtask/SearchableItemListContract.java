@@ -20,8 +20,6 @@ public interface SearchableItemListContract {
     void toggleFavorite(int position, Boolean isFavoriting);
     void bindViewAtPosition(int position, SearchableListItemView view);
     int itemCount();
-    Boolean isFavorited(String UUID);
-    void setFavorite(int position, Boolean isFavoriting);
   }
 
   interface SearchableListItemView {

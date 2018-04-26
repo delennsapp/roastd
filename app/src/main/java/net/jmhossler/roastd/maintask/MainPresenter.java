@@ -30,25 +30,24 @@ public class MainPresenter implements MainContract.Presenter {
     mAuth = auth;
     mCalendar = calendar;
     mMainView.setPresenter(this);
-    mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-      @Override
-      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        if(mAuth.getCurrentUser() != null) {
-          mainView.enableButtons();
-          setCurrentPhotoURL();
-          setDisplayName();
-          setFirstName();
-        }
-      }
-    });
   }
 
   @Override
   public void start() {
+    mAuth.addAuthStateListener(firebaseAuth -> {
+      if(mAuth.getCurrentUser() != null) {
+        mMainView.enableButtons();
+        setCurrentPhotoURL();
+        setDisplayName();
+        setFirstName();
+      }
+    });
+
     if (mMainView.needToLogin()) {
       mMainView.disableButtons();
       mMainView.startLogin();
     }
+
     setGreetingLabel();
   }
 

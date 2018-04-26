@@ -19,10 +19,10 @@ public class BaseSearchableItemPresenter implements SearchableItemListContract.P
 
   protected SearchableItemListContract.View mListView;
   protected List<SearchableItem> mItems;
-  public UserDataSource mUserDataStore;
-  public SearchableItemDataSource mSearchableItemDataStore;
-  public FirebaseAuth mAuth;
-  public User mUser;
+  protected UserDataSource mUserDataStore;
+  protected SearchableItemDataSource mSearchableItemDataStore;
+  protected FirebaseAuth mAuth;
+  protected User mUser;
 
   public BaseSearchableItemPresenter(SearchableItemListContract.View v, FirebaseAuth firebaseAuth,
                                      SearchableItemDataSource searchableItemRepository,
@@ -51,43 +51,19 @@ public class BaseSearchableItemPresenter implements SearchableItemListContract.P
 
   @Override
   public void toggleFavorite(int position, Boolean isFavoriting) {
-    mUserDataStore.getUser(mAuth.getUid(), new UserDataSource.GetUserCallback() {
-      @Override
-      public void onUserLoaded(User user) {
-        if (user == null) {
-          Log.d(TAG, "User " + mAuth.getUid() + " does not exist! This is bad!");
-          mListView.finish();
-        }
-        mUser = user;
-        setFavorite(position, isFavoriting);
-      }
-
-      @Override
-      public void onDataNotAvailable() {
-        Log.d(TAG, "Error with Firebase Instance????");
-      }
-    });
+    if (isFavoriting) {
+      mUser.addFavoriteUUID(mItems.get(position).getUuid());
+    } else {
+      mUser.removeFavoriteUUID(mItems.get(position).getUuid());
+    }
+    mUserDataStore.saveUser(mUser);
   }
 
   @Override
-  public void bindViewAtPosition(int position, SearchableItemListContract.SearchableListItemView view) {
-    view.setContent(mItems.get(position).getName());
-    mUserDataStore.getUser(mAuth.getUid(), new UserDataSource.GetUserCallback() {
-      @Override
-      public void onUserLoaded(User user) {
-        if (user == null) {
-          Log.d(TAG, "User " + mAuth.getUid() + " does not exist! This is bad!");
-          mListView.finish();
-        }
-        mUser = user;
-        view.setFavoriteState(isFavorited(mItems.get(position).getUuid()));
-      }
-
-      @Override
-      public void onDataNotAvailable() {
-        Log.d(TAG, "Error with Firebase Instance????");
-      }
-    });
+    public void bindViewAtPosition(int position, SearchableItemListContract.SearchableListItemView view) {
+    SearchableItem si = mItems.get(position);
+    view.setContent(si.getName());
+    view.setFavoriteState(mUser.getFavoriteUUIDs().containsKey(si.getUuid()));
   }
 
   @Override
@@ -95,29 +71,23 @@ public class BaseSearchableItemPresenter implements SearchableItemListContract.P
     return mItems.size();
   }
 
+  public void userLoaded() {
+
+  }
+
   @Override
   public void start() {
+    mUserDataStore.getUser(mAuth.getUid(), new UserDataSource.GetUserCallback() {
+      @Override
+      public void onUserLoaded(User user) {
+        mUser = user;
+        userLoaded();
+      }
 
-  }
+      @Override
+      public void onDataNotAvailable() {
 
-  @Override
-  public Boolean isFavorited(String UUID) {
-    Map<String, Boolean> favoritesMap = mUser.getFavoriteUUIDs();
-    if(favoritesMap == null) {
-      return false;
-    }
-    List<String> favoritesList = new ArrayList<>(favoritesMap.keySet());
-    return favoritesList.contains(UUID);
-  }
-
-  @Override
-  public void setFavorite(int position, Boolean isFavoriting) {
-    String favoriteUUID = mItems.get(position).getUuid();
-    if (isFavoriting) {
-      mUser.addFavoriteUUID(favoriteUUID);
-    } else {
-      mUser.removeFavoriteUUID(favoriteUUID);
-    }
-    mUserDataStore.saveUser(mUser);
+      }
+    });
   }
 }

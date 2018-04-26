@@ -38,19 +38,4 @@ public class BaseSearchableItemsPresenterTest {
     presenter.mItems.add(new Drink("321", "nice", "epic drink", null, "a nice drink type", 12345.11, "11111", null));
     presenter.mUser = new User("uuid", "email@yomamma.com", "Ree", "nope");
   }
-
-  @Test
-  public void testSetFavorite() {
-    presenter.setFavorite(1, true);
-    Map<String, Boolean> favorites = presenter.mUser.getFavoriteUUIDs();
-    assert favorites != null;
-    assert favorites.get("321");
-    assert favorites.get("123") == null;
-    presenter.setFavorite(0, true);
-    assert favorites.size() == 2;
-    assert favorites.get("123");
-    presenter.setFavorite(0, false);
-    assert favorites.size() == 1;
-    assert favorites.get("123") == null;
-  }
 }

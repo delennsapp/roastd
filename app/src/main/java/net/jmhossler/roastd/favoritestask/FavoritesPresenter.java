@@ -24,37 +24,12 @@ public class FavoritesPresenter extends BaseSearchableItemPresenter {
   }
 
   @Override
-  public void start() {
-    super.start();
-    getUserFavorites();
+  public void userLoaded() {
+    populateUserFavorites();
   }
 
-  public void getUserFavorites() {
-    mUserDataStore.getUser(mAuth.getUid(), new UserDataSource.GetUserCallback() {
-      @Override
-      public void onUserLoaded(User user) {
-        if (user == null) {
-          Log.d(TAG, "User " + mAuth.getUid() + " does not exist! This is bad!");
-          mListView.finish();
-        }
-        mUser = user;
-        retrieveFavorites();
-      }
-
-      @Override
-      public void onDataNotAvailable() {
-        Log.d(TAG, "Error with Firebase Instance????");
-      }
-    });
-  }
-
-  public void retrieveFavorites() {
-    Map<String, Boolean> favoritesMap = mUser.getFavoriteUUIDs();
-
-    if(favoritesMap == null) {
-      favoritesMap = new HashMap<String, Boolean>();
-    }
-    List<String> favoritesList = new ArrayList<>(favoritesMap.keySet());
+  public void populateUserFavorites() {
+    List<String> favoritesList = new ArrayList<>(mUser.getFavoriteUUIDs().keySet());
 
     mSearchableItemDataStore.getSearchableItems(favoritesList, new SearchableItemDataSource.LoadSearchableItemsCallback() {
       @Override

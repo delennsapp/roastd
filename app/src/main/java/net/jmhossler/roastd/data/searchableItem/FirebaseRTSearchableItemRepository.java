@@ -165,6 +165,7 @@ public class FirebaseRTSearchableItemRepository extends FirebaseRTBaseRepository
 
       if (results.size() == 0) {
         new Handler(Looper.getMainLooper()).post(() -> callback.onSearchableItemsLoaded(null));
+        return;
       }
 
       if (results.size() != ids.size()) {

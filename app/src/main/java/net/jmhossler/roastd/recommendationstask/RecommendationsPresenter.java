@@ -27,37 +27,12 @@ public class RecommendationsPresenter extends BaseSearchableItemPresenter {
   }
 
   @Override
-  public void start() {
-    super.start();
-    getUserRecommendations();
-  }
-
-  public void getUserRecommendations() {
-    mUserDataStore.getUser(mAuth.getUid(), new UserDataSource.GetUserCallback() {
-      @Override
-      public void onUserLoaded(User user) {
-        if (user == null) {
-          Log.d(TAG, "User " + mAuth.getUid() + " does not exist!");
-          mListView.finish();
-        }
-        mUser = user;
-        retrieveRecommendations();
-      }
-
-      @Override
-      public void onDataNotAvailable() {
-        Log.d(TAG, "Error with Firebase Instance.");
-      }
-    });
+  public void userLoaded() {
+    retrieveRecommendations();
   }
 
   public void retrieveRecommendations() {
-    Map<String, Boolean> recommendationsMap = mUser.getRecommendationUUIDs();
-
-    if(recommendationsMap == null) {
-      recommendationsMap = new HashMap<String, Boolean>();
-    }
-    List<String> recommendationsList = new ArrayList<>(recommendationsMap.keySet());
+    List<String> recommendationsList = new ArrayList<>(mUser.getRecommendationUUIDs().keySet());
 
     mSearchableItemDataStore.getSearchableItems(recommendationsList, new SearchableItemDataSource.LoadSearchableItemsCallback() {
       @Override
