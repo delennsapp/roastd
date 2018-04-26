@@ -75,6 +75,8 @@
       android:fontFamily="@font/lato"
       android:layout_centerInParent="true"
       android:textSize="16sp"
+      android:drawableLeft="@drawable/ic_place_black_18dp"
+      android:drawablePadding="6dp"
 
       android:id="@+id/address"/>
   </RelativeLayout>
