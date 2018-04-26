@@ -63,6 +63,7 @@ public class DrinkPresenter implements DrinkContract.Presenter {
             setType(item);
             setPrice(item);
             setCurrentRating(item);
+            setImage(item);
           }
           @Override
           public void onDataNotAvailable() { }
